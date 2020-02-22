@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const log = await Users.findBy({ username });
+    const log = await Users.findBy({ username }).first();
 
     if (log && bc.compareSync(password, log.password)) {
       req.session.loggedin = true;
