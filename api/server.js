@@ -23,19 +23,21 @@ const sessionOptions = {
     saveUninitialized: false,
 
     store: new sessionStore({
-        knex: require('../database/dbConfig'),
-        tablename: 'session',
+        knex: require('../database/dbConfig.js'),
+        tablename: 'sessions',
         sidfieldname: 'sid',
         createtable: true,
-        clearInterval: 1000 * 60 * 30
+        clearInterval: 1000 * 60 * 60
     })
 };
+
+server.use(session(sessionOptions));
 
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use(session(sessionOptions));
+
 server.use('/api/auth', authRouter);
 server.use('/api/users', userRouter);
 server.use('/api/jokes', authenticate, jokesRouter);
